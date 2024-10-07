@@ -14,3 +14,10 @@ interface MovieData {
   vote_average: number
   vote_count: number
 }
+
+interface MovieResponse {
+  page: number
+  results: MovieData[]
+  total_pages: number
+  total_results: number
+}

@@ -1,11 +1,16 @@
 import usePopularList from "@/app/hook/usePopularList"
 import { Button } from "./ui/button";
 import Link from "next/link";
+import MovieCardSkeleton from "./MovieCardSkeleton";
 
 export default function PopularList() {
   const { data, isPending, isError, error } = usePopularList();
   if (isPending) {
-    return <div>Loading...</div>;
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+        <MovieCardSkeleton />
+      </div>
+    )
   }
   if (isError) {
     return <div>Error: {error.message}</div>;
