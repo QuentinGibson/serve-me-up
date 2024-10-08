@@ -4,7 +4,7 @@ import { FormEvent, useState, useEffect, Fragment } from "react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import Image from "next/image"
+import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -34,23 +34,17 @@ export default function PageComponent() {
 
   const {
     data,
-    isLoading,
     isFetchingNextPage,
-    isFetchPreviousPageError,
     isFetching,
     status,
     error,
-    isError,
-    fetchNextPage,
-    fetchPreviousPage,
     hasNextPage,
-    hasPreviousPage,
-    refetch
+    refetch,
   } = useMovieSearch(query, currentPage);
+  const totalPages = data?.pages[0]?.total_pages || 0;
 
-const totalPages = data?.pages[0]?.total_pages || 0;
   useEffect(() => {
-    if (query) refetch()
+    if (query) refetch();
   }, [refetch, query, currentPage]);
 
   const onSubmit = (e: FormEvent) => {
@@ -73,21 +67,21 @@ const totalPages = data?.pages[0]?.total_pages || 0;
     <>
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-end">
-<form onSubmit={onSubmit} className="mb-8">
-        <div className="flex items-center space-x-2">
-          <Input
-            type="search"
-            placeholder="Search movies..."
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            className="flex-grow"
-          />
-          <Button type="submit">
-            <Search className="h-4 w-4 mr-2" />
-            Search
-          </Button>
-        </div>
-      </form>
+          <form onSubmit={onSubmit} className="mb-8">
+            <div className="flex items-center space-x-2">
+              <Input
+                type="search"
+                placeholder="Search movies..."
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                className="flex-grow"
+              />
+              <Button type="submit">
+                <Search className="h-4 w-4 mr-2" />
+                Search
+              </Button>
+            </div>
+          </form>
         </div>
 
         <div className="space-y-6">
