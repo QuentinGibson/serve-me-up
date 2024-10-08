@@ -1,19 +1,19 @@
-import {FormEvent, useState} from 'react'
-import {useRouter} from 'next/navigation'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Search } from 'lucide-react'
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
 
 export default function SearchHero() {
-  const [query, setQuery] = useState('')
-  const router = useRouter()
-  
+  const [query, setQuery] = useState("");
+  const router = useRouter();
+
   const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (query.trim()) {
-      router.push('/movies/search?q=' + encodeURIComponent(query))
+      router.push("/movies/search?q=" + encodeURIComponent(query));
     }
-  }
+  };
   return (
     <section className="py-20 text-center">
       <h1 className="text-4xl font-bold mb-4">Welcome to Serve Me Good</h1>

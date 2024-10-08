@@ -99,15 +99,16 @@ export default function PageComponent() {
                           movie.poster_path || movie.backdrop_path
                         }`}
                         alt={`${movie.title} poster`}
-                        layout="fill"
-                        sizes={`(min-width: 640px) 25vw, 50vw`}
+                        sizes={`(min-width: 640px) 25vw, 20vw`}
+                        fill={true}
                         objectFit="cover"
                       />
                     ) : (
                       <Image
                         src={`/image-placeholder.webp`}
                         alt={`Director's reel over a bunch of popcorn`}
-                        layout="fill"
+                        sizes={`(min-width: 640px) 25vw, 20vw`}
+                        fill={true}
                         objectFit="cover"
                       />
                     )}

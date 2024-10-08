@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
+import Link from "next/link";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,82 +10,95 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import GenreDropdown from './GenreDropdown'
-import useMoviesByGenre from '@/app/hook/useMoviesByGenre'
-import { useSearchParams } from 'next/navigation'
-import { Fragment, useState } from 'react'
-import Image from 'next/image'
-import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationLink, PaginationEllipsis, PaginationNext } from './ui/pagination'
-
+} from "@/components/ui/card";
+import GenreDropdown from "./GenreDropdown";
+import useMoviesByGenre from "@/app/hook/useMoviesByGenre";
+import { useSearchParams } from "next/navigation";
+import { Fragment, useState } from "react";
+import Image from "next/image";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationPrevious,
+  PaginationLink,
+  PaginationEllipsis,
+  PaginationNext,
+} from "./ui/pagination";
 
 export default function Page() {
-  const [currentPage, setCurrentPage] = useState(1)
-  const searchParams = useSearchParams()
-  const genre = searchParams.get('genre') || undefined
+  const [currentPage, setCurrentPage] = useState(1);
+  const searchParams = useSearchParams();
+  const genre = searchParams.get("genre") || undefined;
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     window.scrollTo(0, 0);
   };
 
-
-  const { data, isPending, isError, error, hasNextPage } = useMoviesByGenre(currentPage, genre)
+  const { data, isPending, isError, error, hasNextPage } = useMoviesByGenre(
+    currentPage,
+    genre
+  );
   const totalPages = data?.pages[0]?.total_pages || 0;
 
   if (isPending) {
-    return (
-      <div>Loading...</div>
-    )
+    return <div>Loading...</div>;
   }
 
   if (isError) {
-    return (
-      <p>{error.message}</p>
-    )
+    return <p>{error.message}</p>;
   }
 
   return (
-      <div className="flex-grow container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">Browse Movies by Genre</h1>
+    <div className="flex-grow container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-6">Browse Movies by Genre</h1>
 
-        <div className="mb-8">
-          <GenreDropdown />
-        </div>
+      <div className="mb-8">
+        <GenreDropdown />
+      </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
-          {data.pages.map((group, i) => (
-            <Fragment key={i}>
-              {group.results.map((movie) => (
-                <Card key={movie.id} className="flex flex-col">
-                  <CardHeader className="p-0">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+        {data.pages.map((group, i) => (
+          <Fragment key={i}>
+            {group.results.map((movie) => (
+              <Card key={movie.id} className="flex flex-col">
+                <CardHeader className="p-0 relative h-[500px]">
+                  {movie.poster_path || movie.backdrop_path ? (
                     <Image
                       src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL}${
-                          movie.poster_path || movie.backdrop_path
-                        }`}
-                      alt={movie.title}
-                      sizes='(min-width: 640px) 33.33vw, (min-width: 768px) 25vw, (min-width: 1024px) 20vw, 50vw'
-                      width={500}
-                      height={300}
-                      className="w-full h-[400px] object-cover rounded-t-lg"
+                        movie.poster_path || movie.backdrop_path
+                      }`}
+                      alt={`${movie.title} poster`}
+                      layout="fill"
+                      sizes={`(min-width: 640px) 25vw, 50vw`}
+                      objectFit="cover"
                     />
-                  </CardHeader>
-                  <CardContent className="flex-grow p-4">
-                    <CardTitle>{movie.title}</CardTitle>
-                    <CardDescription>{movie.release_date}</CardDescription>
-                  </CardContent>
-                  <CardFooter className="p-4 pt-0">
-                    <Button asChild className="w-full">
-                      <Link href={`/movies/${movie.id}`}>View Details</Link>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </Fragment>
-          ))}
-        </div>
+                  ) : (
+                    <Image
+                      src={`/image-placeholder.webp`}
+                      alt={`Director's reel over a bunch of popcorn`}
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                  )}
+                </CardHeader>
+                <CardContent className="flex-grow p-4">
+                  <CardTitle>{movie.title}</CardTitle>
+                  <CardDescription>{movie.release_date}</CardDescription>
+                </CardContent>
+                <CardFooter className="p-4 pt-0">
+                  <Button asChild className="w-full">
+                    <Link href={`/movies/${movie.id}`}>View Details</Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </Fragment>
+        ))}
+      </div>
 
-<Pagination>
+      <Pagination>
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
@@ -123,6 +136,6 @@ export default function Page() {
           </PaginationItem>
         </PaginationContent>
       </Pagination>
-      </div>
+    </div>
   );
 }
