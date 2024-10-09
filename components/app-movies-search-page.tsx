@@ -94,29 +94,35 @@ export default function PageComponent() {
                 >
                   <div className="md:w-1/4 h-[500px] relative">
                     {movie.poster_path || movie.backdrop_path ? (
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL}${
-                          movie.poster_path || movie.backdrop_path
-                        }`}
-                        alt={`${movie.title} poster`}
-                        sizes={`(min-width: 640px) 25vw, 20vw`}
-                        fill={true}
-                        objectFit="cover"
-                      />
+                      <Link href={`/movies/${movie.id}`}>
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL}${
+                            movie.poster_path || movie.backdrop_path
+                          }`}
+                          alt={`${movie.title} poster`}
+                          sizes={`(min-width: 640px) 25vw, 20vw`}
+                          fill={true}
+                          objectFit="cover"
+                        />
+                      </Link>
                     ) : (
-                      <Image
-                        src={`/image-placeholder.webp`}
-                        alt={`Director's reel over a bunch of popcorn`}
-                        sizes={`(min-width: 640px) 25vw, 20vw`}
-                        fill={true}
-                        objectFit="cover"
-                      />
+                      <Link href={`/movies/${movie.id}`}>
+                        <Image
+                          src={`/image-placeholder.webp`}
+                          alt={`Director's reel over a bunch of popcorn`}
+                          sizes={`(min-width: 640px) 25vw, 20vw`}
+                          fill={true}
+                          objectFit="cover"
+                        />
+                      </Link>
                     )}
                   </div>
                   <div className="md:w-3/4 flex flex-col">
-                    <CardHeader>
-                      <CardTitle>{movie.title}</CardTitle>
-                    </CardHeader>
+                    <Link href={`/movies/${movie.id}`}>
+                      <CardHeader>
+                        <CardTitle>{movie.title}</CardTitle>
+                      </CardHeader>
+                    </Link>
                     <CardContent>
                       <p className="text-muted-foreground">{movie.overview}</p>
                     </CardContent>
