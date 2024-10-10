@@ -6,7 +6,7 @@ import TopRatedList from '@/components/TopRatedList'
 import TrendingMoviesList from "@/components/TrendingMoviesList"
 import SearchHero from './SearchHero'
 
-export function ServeMeGoodPage() {
+export default function ServeMeGoodPage() {
   return (
     <div className="min-h-screen bg-background">
       <main>
