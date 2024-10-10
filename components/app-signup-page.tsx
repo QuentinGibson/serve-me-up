@@ -1,27 +1,25 @@
 'use client'
 
+import { useActionState } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { useForm } from '@tanstack/react-form'
+import { mergeForm, useTransform, useForm } from '@tanstack/react-form'
+import { initialFormState } from '@tanstack/react-form/nextjs'
 import { zodValidator } from '@tanstack/zod-form-adapter'
 import { z } from 'zod'
 import FieldInfo from './FIeldInfo'
 import { Button } from './ui/button'
+import signUpFormSettings from "@/lib/signUpFormSettings"
+import { signUpUser } from "@/lib/user"
 
 export default function Page() {
+  const [state, action] = useActionState(signUpUser, initialFormState)
   const form = useForm({
-    defaultValues: {
-      username: '',
-      email: '',
-      password: '',
-      confirm_password: '',
-    },
-    validatorAdapter: zodValidator(),
-    onSubmit: async (values) => {
-      console.log('submit: ', values)
-    },
+    ...signUpFormSettings,
+    transform: useTransform((baseForm) => mergeForm(baseForm, state!), [state])
   })
+
 
 
   const handleSubmit = async (e: React.FormEvent) => {
