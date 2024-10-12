@@ -1,6 +1,7 @@
 'use server'
 
 import {
+  FormState,
   ServerValidateError,
   createServerValidate,
 } from '@tanstack/react-form/nextjs'
@@ -115,7 +116,7 @@ export async function signUpUser(prev: unknown, formData: FormData) {
   } catch (e) {
     console.log(e)
     if (e instanceof PrismaClientValidationError) {
-      return e.message
+      console.log(e.message)
     }
   }
 }
