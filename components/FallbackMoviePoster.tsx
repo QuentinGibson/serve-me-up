@@ -1,13 +1,16 @@
-'use client'
+"use client";
 
-import React from 'react'
+import React from "react";
 
 interface FallbackMoviePosterProps {
-  width?: number
-  height?: number
+  width?: number;
+  height?: number;
 }
 
-const FallbackMoviePoster: React.FC<FallbackMoviePosterProps> = ({ width = 200, height = 300 }) => {
+const FallbackMoviePoster: React.FC<FallbackMoviePosterProps> = ({
+  width = 200,
+  height = 300,
+}) => {
   return (
     <svg
       width={width}
@@ -36,7 +39,7 @@ const FallbackMoviePoster: React.FC<FallbackMoviePosterProps> = ({ width = 200, 
         No Image Available
       </text>
     </svg>
-  )
-}
+  );
+};
 
-export default FallbackMoviePoster
+export default FallbackMoviePoster;

@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
 import useMovieDetails from "@/app/hook/useMovieDetails";
-import {Star, Clock, Calendar, Search} from 'lucide-react'
-import Image from 'next/image'
+import { Star, Clock, Calendar, Search } from "lucide-react";
+import Image from "next/image";
 import { Tag } from "./ui/Tagline";
 import { Input } from "./ui/input";
 import router from "next/router";
@@ -15,8 +15,8 @@ export default function MovieDetailsPage({
 }: {
   params: { id: string };
 }) {
-  const {data: movie, isError, error, isPending} = useMovieDetails(params.id);
-  const searchParams = useSearchParams()
+  const { data: movie, isError, error, isPending } = useMovieDetails(params.id);
+  const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
   const [inputValue, setInputValue] = useState(query);
   const onSubmit = (e: FormEvent) => {
@@ -27,36 +27,32 @@ export default function MovieDetailsPage({
   };
 
   if (isPending) {
-    return (
-      <p>Loading...</p>
-    )
+    return <p>Loading...</p>;
   }
 
   if (isError) {
-    return (
-      <p>{error.message}</p>
-    )
+    return <p>{error.message}</p>;
   }
 
   return (
     <div className="container mx-auto px-4 py-8">
-<div className="flex justify-end">
-          <form onSubmit={onSubmit} className="mb-8">
-            <div className="flex items-center space-x-2">
-              <Input
-                type="search"
-                placeholder="Search movies..."
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                className="flex-grow"
-              />
-              <Button type="submit">
-                <Search className="h-4 w-4 mr-2" />
-                Search
-              </Button>
-            </div>
-          </form>
-        </div>
+      <div className="flex justify-end">
+        <form onSubmit={onSubmit} className="mb-8">
+          <div className="flex items-center space-x-2">
+            <Input
+              type="search"
+              placeholder="Search movies..."
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              className="flex-grow"
+            />
+            <Button type="submit">
+              <Search className="h-4 w-4 mr-2" />
+              Search
+            </Button>
+          </div>
+        </form>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="md:col-span-1">
           <Image
@@ -70,7 +66,9 @@ export default function MovieDetailsPage({
         <div className="md:col-span-2">
           <h1 className="text-4xl font-bold mb-4">{movie.title}</h1>
 
-          <span className="text-lg text-muted-foreground mb-6">{movie.status}</span>
+          <span className="text-lg text-muted-foreground mb-6">
+            {movie.status}
+          </span>
           <div className="flex items-center space-x-4 mb-4">
             <div className="flex items-center">
               <Star className="w-5 h-5 text-yellow-400 mr-1" />

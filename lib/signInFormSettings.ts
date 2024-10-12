@@ -1,5 +1,5 @@
 import { formOptions } from "@tanstack/react-form";
-import { zodValidator } from '@tanstack/zod-form-adapter'
+import { zodValidator } from "@tanstack/zod-form-adapter";
 
 const signInFormSettings = formOptions({
   defaultValues: {
@@ -12,4 +12,4 @@ const signInFormSettings = formOptions({
   },
 });
 
-export default signInFormSettings
+export default signInFormSettings;

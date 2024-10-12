@@ -1,5 +1,5 @@
-import ServeMeGoodPage from "@/components/app-page"
+import ServeMeGoodPage from "@/components/app-page";
 
 export default function HomePage() {
-  return <ServeMeGoodPage />
+  return <ServeMeGoodPage />;
 }

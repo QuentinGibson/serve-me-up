@@ -38,7 +38,7 @@ export default function Page() {
 
   const { data, isPending, isError, error, hasNextPage } = useMoviesByGenre(
     currentPage,
-    genre
+    genre,
   );
   const totalPages = data?.pages[0]?.total_pages || 0;
 

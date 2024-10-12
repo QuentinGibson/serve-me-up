@@ -12,8 +12,8 @@ export default function GenreDropdown() {
   const { data, isPending, isError, error } = useMovieGenres();
   const genreObjects = data?.genres;
   const router = useRouter();
-  const searchParams = useSearchParams()
-  const currentGenre = searchParams.get("genre") || ""
+  const searchParams = useSearchParams();
+  const currentGenre = searchParams.get("genre") || "";
 
   if (isPending) {
     return <p>Loading...</p>;

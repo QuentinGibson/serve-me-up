@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import Image from "next/image"
-import { Star, Clock, Calendar } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import Image from "next/image";
+import { Star, Clock, Calendar } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // This is a mock function. You'll need to implement the actual data fetching logic.
 async function getMovieDetails(id: string) {
@@ -15,19 +15,40 @@ async function getMovieDetails(id: string) {
     release_date: "2010-07-16",
     runtime: 148,
     genres: ["Action", "Science Fiction", "Adventure"],
-    overview: "Cobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception\", the implantation of another person's idea into a target's subconscious.",
+    overview:
+      "Cobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception\", the implantation of another person's idea into a target's subconscious.",
     vote_average: 8.4,
     cast: [
-      { name: "Leonardo DiCaprio", character: "Cobb", profile_path: "/placeholder.svg" },
-      { name: "Joseph Gordon-Levitt", character: "Arthur", profile_path: "/placeholder.svg" },
-      { name: "Ellen Page", character: "Ariadne", profile_path: "/placeholder.svg" },
-      { name: "Tom Hardy", character: "Eames", profile_path: "/placeholder.svg" },
-    ]
-  }
+      {
+        name: "Leonardo DiCaprio",
+        character: "Cobb",
+        profile_path: "/placeholder.svg",
+      },
+      {
+        name: "Joseph Gordon-Levitt",
+        character: "Arthur",
+        profile_path: "/placeholder.svg",
+      },
+      {
+        name: "Ellen Page",
+        character: "Ariadne",
+        profile_path: "/placeholder.svg",
+      },
+      {
+        name: "Tom Hardy",
+        character: "Eames",
+        profile_path: "/placeholder.svg",
+      },
+    ],
+  };
 }
 
-export async function MovieDetailsComponent({ params }: { params: { id: string } }) {
-  const movie = await getMovieDetails(params.id)
+export async function MovieDetailsComponent({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const movie = await getMovieDetails(params.id);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -71,11 +92,21 @@ export async function MovieDetailsComponent({ params }: { params: { id: string }
               <Card key={actor.name}>
                 <CardContent className="p-4">
                   <Avatar className="w-20 h-20 mx-auto mb-2">
-                    <AvatarImage src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`} alt={actor.name} />
-                    <AvatarFallback>{actor.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                    <AvatarImage
+                      src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
+                      alt={actor.name}
+                    />
+                    <AvatarFallback>
+                      {actor.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
+                    </AvatarFallback>
                   </Avatar>
                   <h3 className="font-semibold text-center">{actor.name}</h3>
-                  <p className="text-sm text-center text-gray-500">{actor.character}</p>
+                  <p className="text-sm text-center text-gray-500">
+                    {actor.character}
+                  </p>
                 </CardContent>
               </Card>
             ))}
@@ -84,8 +115,10 @@ export async function MovieDetailsComponent({ params }: { params: { id: string }
       </div>
       <div className="mt-12">
         <h2 className="text-2xl font-semibold mb-4">User Reviews</h2>
-        <p className="text-gray-500">User reviews will be implemented in a future update.</p>
+        <p className="text-gray-500">
+          User reviews will be implemented in a future update.
+        </p>
       </div>
     </div>
-  )
+  );
 }

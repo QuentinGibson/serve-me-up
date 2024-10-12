@@ -1,4 +1,4 @@
-import useTopRatedList from "@/app/hook/useTopRatedList"
+import useTopRatedList from "@/app/hook/useTopRatedList";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import MovieCardSkeleton from "./MovieCardSkeleton";
@@ -10,7 +10,7 @@ export default function TopRatedList() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
         <MovieCardSkeleton />
       </div>
-    )
+    );
   }
   if (isError) {
     return <div>Error: {error.message}</div>;

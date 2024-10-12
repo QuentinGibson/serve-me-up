@@ -1,24 +1,31 @@
-'use client'
+"use client";
 
-import {  useActionState } from "react"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { mergeForm, useTransform, useForm } from '@tanstack/react-form'
-import { initialFormState } from '@tanstack/react-form/nextjs'
-import { zodValidator } from '@tanstack/zod-form-adapter'
-import { z } from 'zod'
-import FieldInfo from './FIeldInfo'
-import { Button } from './ui/button'
-import signUpFormSettings from "@/lib/signUpFormSettings"
-import {signUpUser} from "@/lib/user"
+import { useActionState } from "react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { mergeForm, useTransform, useForm } from "@tanstack/react-form";
+import { initialFormState } from "@tanstack/react-form/nextjs";
+import { zodValidator } from "@tanstack/zod-form-adapter";
+import { z } from "zod";
+import FieldInfo from "./FIeldInfo";
+import { Button } from "./ui/button";
+import signUpFormSettings from "@/lib/signUpFormSettings";
+import { signUpUser } from "@/lib/user";
 
 export default function Page() {
-  const [state, action] = useActionState(signUpUser, initialFormState)
+  const [state, action] = useActionState(signUpUser, initialFormState);
   const form = useForm({
     ...signUpFormSettings,
-    transform: useTransform((baseForm) => mergeForm(baseForm, state!), [state])
-  })
+    transform: useTransform((baseForm) => mergeForm(baseForm, state!), [state]),
+  });
 
   return (
     <div
@@ -38,7 +45,11 @@ export default function Page() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={action as never} onSubmit={() => form.handleSubmit()} className="space-y-4">
+          <form
+            action={action as never}
+            onSubmit={() => form.handleSubmit()}
+            className="space-y-4"
+          >
             <div className="space-y-2">
               <form.Field
                 name="username"
