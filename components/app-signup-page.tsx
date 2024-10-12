@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState } from "react"
+import {  useActionState } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -11,7 +11,7 @@ import { z } from 'zod'
 import FieldInfo from './FIeldInfo'
 import { Button } from './ui/button'
 import signUpFormSettings from "@/lib/signUpFormSettings"
-import { signUpUser } from "@/lib/user"
+import {signUpUser} from "@/lib/user"
 
 export default function Page() {
   const [state, action] = useActionState(signUpUser, initialFormState)
@@ -19,14 +19,6 @@ export default function Page() {
     ...signUpFormSettings,
     transform: useTransform((baseForm) => mergeForm(baseForm, state!), [state])
   })
-
-
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    form.handleSubmit()
-  }
 
   return (
     <div
@@ -46,7 +38,7 @@ export default function Page() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form action={action as never} onSubmit={() => form.handleSubmit()} className="space-y-4">
             <div className="space-y-2">
               <form.Field
                 name="username"
@@ -60,6 +52,7 @@ export default function Page() {
                     <Label htmlFor={field.name}>Username</Label>
                     <Input
                       id={field.name}
+                      name={field.name}
                       placeholder="johndoe"
                       value={field.state.value}
                       onBlur={field.handleBlur}
@@ -85,6 +78,7 @@ export default function Page() {
                     <Input
                       id={field.name}
                       type="email"
+                      name={field.name}
                       placeholder="john@example.com"
                       value={field.state.value}
                       onChange={(e) => field.handleChange(e.target.value)}
@@ -131,6 +125,7 @@ export default function Page() {
                     <Input
                       id={field.name}
                       value={field.state.value}
+                      name={field.name}
                       onBlur={field.handleBlur}
                       type="password"
                       onChange={(e) => field.handleChange(e.target.value)}
@@ -161,6 +156,7 @@ export default function Page() {
                     <Input
                       id={field.name}
                       type="password"
+                      name={field.name}
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}

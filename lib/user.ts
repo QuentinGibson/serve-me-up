@@ -9,8 +9,11 @@ import { db } from '@/db'
 import bcrypt from 'bcrypt'
 import { generateId } from 'lucia'
 import { redirect } from 'next/navigation'
+import { PrismaClientValidationError } from '@prisma/client/runtime/library'
+import signInFormSettings from './signInFormSettings'
+import { lucia } from '@/auth'
 
-const serverValidate = createServerValidate({
+const signUpValidate = createServerValidate({
   ...signUpFormSettings,
   onServerValidate: async ({ value }) => {
     try {
@@ -24,9 +27,52 @@ const serverValidate = createServerValidate({
   },
 })
 
-export default async function someAction(prev: unknown, formData: FormData) {
+const signInValidate = createServerValidate({
+  ...signInFormSettings,
+  onServerValidate: async ({ value }) => {
+    try {
+      // Try to find the user by email
+      const user = await db.user.findFirst({
+        where: {
+          email: value.email,
+        },
+      })
+
+      if (!user) {
+        // Try to find the user by username
+        const username = await db.user.findFirst({
+          where: {
+            username: value.email,
+          },
+        })
+
+        if (!username) {
+          return 'Failed to login with the provided credentials'
+        }
+        const passwordMatch = await bcrypt.compare(value.password, username.password)
+        if (!passwordMatch) {
+          return 'Failed to login with the provided credentials'
+        }
+      }
+
+      if (user) {
+        const passwordMatch = await bcrypt.compare(value.password, user.password)
+        if (!passwordMatch) {
+          return 'Failed to login with the provided credentials'
+        }
+      }
+
+          return 'Failed to login with the provided credentials'
+
+    } catch (error) {
+      console.error(error)
+    }
+  },
+})
+
+export async function signUpUser(prev: unknown, formData: FormData) {
   try {
-    await serverValidate(formData)
+    await signUpValidate(formData)
   } catch (e) {
     if (e instanceof ServerValidateError) {
       return e.formState
@@ -37,19 +83,24 @@ export default async function someAction(prev: unknown, formData: FormData) {
   }
 
   // Your form has successfully validated!
+
+  // Gather the form data
   const username = formData.get('username') as string
   const email = formData.get('email') as string
-  const password = formData.get('password')
-  const passwordHash = await bcrypt.hash(password as string, 15)
+  const password = formData.get('password') as string
 
+  // Check if the required fields are missing
   if (!username || !email || !password) {
-
     throw new Error('Missing required fields')
   }
 
+  // Hash the password
+  const salt = await bcrypt.genSalt(15)
+  const passwordHash = await bcrypt.hash(password, salt)
 
   try { 
-     db.user.create({
+    // Save the user to the database
+     await db.user.create({
       data: {
         id: generateId(10),
         username,
@@ -58,8 +109,65 @@ export default async function someAction(prev: unknown, formData: FormData) {
         password: passwordHash,
       },
     })
+
+    // Redirect to the login page
     redirect("/login")
   } catch (e) {
     console.log(e)
+    if (e instanceof PrismaClientValidationError) {
+      return e.message
+    }
   }
+}
+
+export async function signInUser(prev: unknown, formData: FormData) {
+
+  try {
+    await signInValidate(formData)
+  } catch (e) {
+    if (e instanceof ServerValidateError) {
+      return e.formState
+    }
+
+    // Some other error occurred while validating your form
+    throw e
+  }
+
+  // Your form has successfully validated!
+  const email = formData.get("email") as string
+  const password = formData.get("password") as string
+
+  if (!email || !password) {
+    throw new Error("Missing required fields")
+  }
+
+  let user
+
+  user = await db.user.findFirst({
+    where: {
+      email: email,
+    },
+  })
+
+  if (!user) {
+    user = await db.user.findFirst({
+      where: {
+        username: email,
+      },
+    })
+  }
+
+  if (!user) {
+    throw new Error("User not found")
+  }
+
+  const passwordMatch = await bcrypt.compare(password, user.password)
+  if (!passwordMatch) {
+    throw new Error("Invalid credentials")
+  }
+
+  const session = lucia.createSession(user.id, {username: user.username, email: user.email, confirmed: user.confirmed, userId: user.id})
+
+  // Redirect to the dashboard
+  redirect("/dashboard")
 }
