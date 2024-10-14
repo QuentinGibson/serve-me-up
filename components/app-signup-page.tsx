@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useActionState } from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useActionState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Card,
   CardContent,
@@ -10,15 +10,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { mergeForm, useTransform, useForm } from "@tanstack/react-form";
-import { initialFormState } from "@tanstack/react-form/nextjs";
-import { zodValidator } from "@tanstack/zod-form-adapter";
-import { z } from "zod";
-import FieldInfo from "./FIeldInfo";
-import { Button } from "./ui/button";
-import signUpFormSettings from "@/lib/signUpFormSettings";
-import { signUpUser } from "@/lib/user";
+} from '@/components/ui/card';
+import { mergeForm, useTransform, useForm } from '@tanstack/react-form';
+import { initialFormState } from '@tanstack/react-form/nextjs';
+import { zodValidator } from '@tanstack/zod-form-adapter';
+import { z } from 'zod';
+import FieldInfo from './FIeldInfo';
+import { Button } from './ui/button';
+import signUpFormSettings from '@/lib/signUpFormSettings';
+import { signUpUser } from '@/lib/user';
 
 export default function Page() {
   const [state, action] = useActionState(signUpUser, initialFormState);
@@ -115,18 +115,18 @@ export default function Page() {
                     })
                     .regex(/[A-Z]/, {
                       message:
-                        "Password must contain at least one uppercase letter",
+                        'Password must contain at least one uppercase letter',
                     })
                     .regex(/[a-z]/, {
                       message:
-                        "Password must contain at least one lowercase letter",
+                        'Password must contain at least one lowercase letter',
                     })
                     .regex(/\d/, {
-                      message: "Password must contain at least one digit",
+                      message: 'Password must contain at least one digit',
                     })
                     .regex(/[!@#$%^&*]/, {
                       message:
-                        "Password must contain at least one special character",
+                        'Password must contain at least one special character',
                     }),
                 }}
               >
@@ -152,10 +152,10 @@ export default function Page() {
                 name="confirm_password"
                 validatorAdapter={zodValidator()}
                 validators={{
-                  onChangeListenTo: ["password"],
+                  onChangeListenTo: ['password'],
                   onChange: ({ value, fieldApi }) => {
-                    if (value !== fieldApi.form.getFieldValue("password")) {
-                      return "Passwords do not match";
+                    if (value !== fieldApi.form.getFieldValue('password')) {
+                      return 'Passwords do not match';
                     }
                     return undefined;
                   },
@@ -183,7 +183,7 @@ export default function Page() {
             >
               {([canSubmit, isSubmitting]) => (
                 <Button type="submit" disabled={!canSubmit}>
-                  {isSubmitting ? "..." : "Sign Up"}
+                  {isSubmitting ? '...' : 'Sign Up'}
                 </Button>
               )}
             </form.Subscribe>
@@ -191,8 +191,8 @@ export default function Page() {
         </CardContent>
         <CardFooter className="flex justify-center">
           <p className="text-sm text-gray-600">
-            Already have an account?{" "}
-            <a href="/login" className="text-blue-600 hover:underline">
+            Already have an account?{' '}
+            <a href="/signIn" className="text-blue-600 hover:underline">
               Log in
             </a>
           </p>

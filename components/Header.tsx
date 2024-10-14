@@ -31,7 +31,7 @@ export default function Header() {
           </Link>
         </nav>
         <div className="flex items-center space-x-2">
-          <Link href="/login">
+          <Link href="/signIn">
             <Button variant="ghost" size="sm">
               <User className="h-4 w-4 mr-2" />
               Login
