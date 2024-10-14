@@ -1,14 +1,10 @@
 "use client";
 
 import useMovieDetails from "@/app/hook/useMovieDetails";
-import { Star, Clock, Calendar, Search } from "lucide-react";
+import { Star, Clock, Calendar } from "lucide-react";
 import Image from "next/image";
 import { Tag } from "./ui/Tagline";
-import { Input } from "./ui/input";
-import router from "next/router";
-import { FormEvent, useState } from "react";
-import { Button } from "./ui/button";
-import { useSearchParams } from "next/navigation";
+import SearchMovieSection from "@/components/SearchMovieSection";
 
 export default function MovieDetailsPage({
   params,
@@ -16,15 +12,6 @@ export default function MovieDetailsPage({
   params: { id: string };
 }) {
   const { data: movie, isError, error, isPending } = useMovieDetails(params.id);
-  const searchParams = useSearchParams();
-  const query = searchParams.get("q") || "";
-  const [inputValue, setInputValue] = useState(query);
-  const onSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (inputValue.trim() !== query) {
-      router.push(`?q=${encodeURIComponent(inputValue.trim())}`);
-    }
-  };
 
   if (isPending) {
     return <p>Loading...</p>;
@@ -37,21 +24,7 @@ export default function MovieDetailsPage({
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-end">
-        <form onSubmit={onSubmit} className="mb-8">
-          <div className="flex items-center space-x-2">
-            <Input
-              type="search"
-              placeholder="Search movies..."
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              className="flex-grow"
-            />
-            <Button type="submit">
-              <Search className="h-4 w-4 mr-2" />
-              Search
-            </Button>
-          </div>
-        </form>
+        <SearchMovieSection/>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="md:col-span-1">

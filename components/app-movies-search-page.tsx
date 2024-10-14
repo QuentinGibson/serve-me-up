@@ -24,6 +24,7 @@ import {
 import { Search, Star } from "lucide-react";
 import useMovieSearch from "@/app/hook/useMovieSearch";
 import { Input } from "./ui/input";
+import SearchMovieSection from "./SearchMovieSection";
 
 export default function PageComponent() {
   const searchParams = useSearchParams();
@@ -67,21 +68,7 @@ export default function PageComponent() {
     <>
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-end">
-          <form onSubmit={onSubmit} className="mb-8">
-            <div className="flex items-center space-x-2">
-              <Input
-                type="search"
-                placeholder="Search movies..."
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                className="flex-grow"
-              />
-              <Button type="submit">
-                <Search className="h-4 w-4 mr-2" />
-                Search
-              </Button>
-            </div>
-          </form>
+          <SearchMovieSection />
         </div>
 
         <div className="space-y-6">
