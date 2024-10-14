@@ -1,8 +1,8 @@
 "use client";
 
-import { FormEvent, useState, useEffect, Fragment } from "react";
+import { useState, useEffect, Fragment } from "react";
 import Link from "next/link";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import {
@@ -21,17 +21,14 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { Search, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import useMovieSearch from "@/app/hook/useMovieSearch";
-import { Input } from "./ui/input";
 import SearchMovieSection from "./SearchMovieSection";
 
 export default function PageComponent() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
   const [currentPage, setCurrentPage] = useState(1);
-  const [inputValue, setInputValue] = useState(query);
-  const router = useRouter();
 
   const {
     data,
@@ -47,13 +44,6 @@ export default function PageComponent() {
   useEffect(() => {
     if (query) refetch();
   }, [refetch, query, currentPage]);
-
-  const onSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (inputValue.trim() !== query) {
-      router.push(`?q=${encodeURIComponent(inputValue.trim())}`);
-    }
-  };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
