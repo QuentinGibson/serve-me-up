@@ -1,5 +1,12 @@
 import MovieDetailsPage from "@/components/app-movies-details-page";
 
-export default function Page({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: {
+    id: string;
+  };
+
+}
+
+export default function Page({ params }: PageProps) {
   return <MovieDetailsPage params={params} />;
 }
