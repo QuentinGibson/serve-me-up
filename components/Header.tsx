@@ -1,8 +1,8 @@
-import { Film, User } from "lucide-react";
-import { Button } from "./ui/button";
-import Link from "next/link";
+import { Film } from 'lucide-react';
+import Link from 'next/link';
+import UserButtons from './UserButtons';
 
-export default function Header() {
+export default async function Header() {
   return (
     <header className="border-b">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -31,15 +31,7 @@ export default function Header() {
           </Link>
         </nav>
         <div className="flex items-center space-x-2">
-          <Link href="/signIn">
-            <Button variant="ghost" size="sm">
-              <User className="h-4 w-4 mr-2" />
-              Login
-            </Button>
-          </Link>
-          <Link href="/signup">
-            <Button size="sm">Sign Up</Button>
-          </Link>
+          <UserButtons />
         </div>
       </div>
     </header>
