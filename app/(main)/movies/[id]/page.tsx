@@ -1,12 +1,9 @@
 import MovieDetailsPage from "@/components/app-movies-details-page";
+import { useParams } from "next/navigation";
 
-interface PageProps {
-  params: {
-    id: string;
-  };
 
-}
-
-export default function Page({ params }: PageProps) {
-  return <MovieDetailsPage params={params} />;
+export default async function Page() {
+  const params = useParams();
+  const id = params.id as string
+  return <MovieDetailsPage id={id} />;
 }

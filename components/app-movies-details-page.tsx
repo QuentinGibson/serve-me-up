@@ -6,12 +6,12 @@ import Image from "next/image";
 import { Tag } from "./ui/Tagline";
 import SearchMovieSection from "@/components/SearchMovieSection";
 
-export default function MovieDetailsPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const { data: movie, isError, error, isPending } = useMovieDetails(params.id);
+interface MovieDetailsProps {
+  id: string
+}
+
+export default function MovieDetailsPage({ id }: MovieDetailsProps) {
+  const { data: movie, isError, error, isPending } = useMovieDetails(id);
 
   if (isPending) {
     return <p>Loading...</p>;
