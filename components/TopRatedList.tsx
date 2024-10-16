@@ -1,3 +1,5 @@
+"use client"
+
 import useTopRatedList from "@/app/hook/useTopRatedList";
 import { Button } from "./ui/button";
 import Link from "next/link";

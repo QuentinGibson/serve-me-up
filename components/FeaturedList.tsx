@@ -1,3 +1,5 @@
+"use client"
+
 import useFeaturedList from "@/app/hook/useFeaturedList";
 import { Button } from "./ui/button";
 import Link from "next/link";

@@ -1,3 +1,4 @@
+"use client"
 import useTrendingList from "@/app/hook/useTrendingList";
 import { Button } from "./ui/button";
 import Link from "next/link";

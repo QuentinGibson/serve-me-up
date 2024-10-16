@@ -1,3 +1,4 @@
+'use client'
 import usePopularList from "@/app/hook/usePopularList";
 import { Button } from "./ui/button";
 import Link from "next/link";

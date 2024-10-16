@@ -1,12 +1,10 @@
-"use client";
-
 import FeaturedList from "@/components/FeaturedList";
 import PopularList from "@/components/PopularList";
 import TopRatedList from "@/components/TopRatedList";
 import TrendingMoviesList from "@/components/TrendingMoviesList";
 import SearchHero from "./SearchHero";
 
-export default function ServeMeGoodPage() {
+export default async function ServeMeGoodPage() {
   return (
     <div className="min-h-screen bg-background">
       <main>

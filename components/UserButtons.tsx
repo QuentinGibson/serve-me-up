@@ -1,19 +1,9 @@
-import { getServerAuthSession } from '@/auth';
-import { Button } from './ui/button';
-import Link from 'next/link';
+import { getServerAuthSession } from '@/app/auth';
 import LogInButton from './LoginButton';
+import LogoutButton from './LogoutButton';
 
 export default async function UserButtons() {
   const session = await getServerAuthSession();
-  console.log(`Session: ${session}`)
-  if (session?.user) return (
-    <Link href={'/api/auth/signout'}>
-      <Button>Logout</Button>;
-    </Link>
-  );
-  return (
-    <>
-      <LogInButton />
-    </>
-  );
+  if (session?.user) return <LogoutButton />
+  return <LogInButton />
 }
